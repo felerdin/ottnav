@@ -12,7 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 let db;
 const url =
   "mongodb+srv://ott_nav:troll0083@cluster0.dkwusfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-new MongoClient(url)
+
+// 🔥 여기 SSL 옵션 추가
+new MongoClient(url, { ssl: true, tlsAllowInvalidCertificates: true })
   .connect()
   .then((client) => {
     console.log("DB연결성공");
@@ -23,7 +25,7 @@ new MongoClient(url)
     });
   })
   .catch((err) => {
-    console.log(err);
+    console.error("MongoDB 연결 에러:", err);
   });
 
 // req, res => 요청, 응답
