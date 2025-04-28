@@ -17,8 +17,9 @@ new MongoClient(url)
   .then((client) => {
     console.log("DB연결성공");
     db = client.db("OTTnav");
-    app.listen(8080, () => {
-      console.log("http://localhost:8080 에서 서버 실행중");
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
     });
   })
   .catch((err) => {
@@ -50,8 +51,11 @@ app.get("/autocomplete", async (req, res) => {
   res.json(titles);
 });
 
-app.get('/content/:korean_title', async (req, res) => {
+app.get("/content/:korean_title", async (req, res) => {
   const title = req.params.korean_title;
-  const result = await db.collection("content").find({ korean_title: title }).toArray();
+  const result = await db
+    .collection("content")
+    .find({ korean_title: title })
+    .toArray();
   res.render("content.ejs", { result });
 });
