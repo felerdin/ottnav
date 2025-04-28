@@ -1,0 +1,328 @@
+@font-face {
+  font-family: "FlightSans-Title";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/FlightSans-Title.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* CSS 디폴드 값 */
+
+html {
+  font-family: "FlightSans-Title", "Apple SD Gothic Neo", Roboto, "Noto Sans KR",
+    NanumGothic, "Malgun Gothic", sans-serif;
+  color: #555;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+div,
+span,
+article,
+section,
+header,
+footer,
+aside,
+p,
+ul,
+li,
+fieldset,
+legend,
+label,
+a,
+nav,
+form {
+  box-sizing: border-box;
+  /* content-box */
+}
+ol,
+ul,
+li {
+  list-style: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+a {
+  display: inline-block;
+}
+button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+  background: #b6b6b6;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 430px;
+  background: #f4f4f4;
+  min-height: 100vh;
+  padding-top: 40px;
+  align-items: flex-start;
+}
+
+.title {
+  font-family: "FlightSans-Title";
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
+  align-self: center;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  align-self: center;
+}
+
+.content-container {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  overflow: hidden;
+  margin: 20px auto 0;
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
+  align-self: center;
+}
+
+.poster-container {
+  width: 166px;
+  height: 236px;
+  flex-shrink: 0;
+}
+
+.poster-container img {
+  display: block; /* 이미지 하단 여백 제거 */
+  object-fit: cover; /* 이미지 비율 유지하면서 컨테이너 채우기 */
+}
+
+.content-info {
+  flex: 1;
+  padding: 16px 24px;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.icon {
+  border-radius: 4px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+  margin-right: 4px;
+}
+
+.title-kr {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.title-en {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.label {
+  color: #666;
+  min-width: 60px;
+  font-size: 13px;
+}
+
+.value {
+  color: #333;
+  flex: 1;
+  font-size: 13px;
+}
+
+.search-input {
+  width: 90%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 돋보기 아이콘콘 */
+.search-button {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.info-icon {
+  margin-bottom: 6px;
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 추가 */
+@media (min-width: 768px) {
+  .flex-container {
+    margin-top: 80px;
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 36px;
+    align-self: center;
+  }
+
+  .search-container {
+    max-width: 400px;
+  }
+
+  .content-container {
+    max-width: 400px;
+    /* padding: 24px; 큰 화면에서는 여백 더 크게 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 더 강하게 */
+  }
+
+  .search-input {
+    padding: 14px 20px;
+  }
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="OTT 서비스에서 원하는 콘텐츠를 쉽게 찾아보세요. 넷플릭스, 왓챠, 티빙 등 다양한 OTT 서비스의 콘텐츠를 한 번에 검색할 수 있습니다."
+    />
+    <meta
+      name="keywords"
+      content="OTT, 넷플릭스, 왓챠, 티빙, 드라마, 영화, 검색"
+    />
+    <meta name="robots" content="index, follow" />
+    <title>OTT 탐색기</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      .container {
+        position: relative;
+      }
+      #visitor-count {
+        position: absolute;
+        right: 24px;
+        bottom: 24px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 12px 20px;
+        font-size: 15px;
+        color: #333;
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 제목 -->
+      <h1 class="title">OTT 탐색기</h1>
+
+      <!-- 검색창 -->
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="검색어를 입력하세요"
+        />
+        <button class="search-button">
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="#555"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <line x1="16" y1="16" x2="22" y2="22" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- container 내부 우측 하단에 고정 표시 -->
+      <div
+        id="visitor-count"
+        style="
+          position: absolute;
+          right: 24px;
+          bottom: 24px;
+          font-size: 15px;
+          color: #333;
+          z-index: 100;
+          background: none;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+          border-radius: 0;
+        "
+      >
+        이번달 접속자: <span id="visitor-num">-</span>명
+      </div>
+    </div>
+
+    <!-- 자동완성 및 접속자수 스크립트 -->
+    <script>
+      const searchInput = document.querySelector(".search-input");
+      const searchContainer = document.querySelector(".search-container");
+
+      // 자동완성 목록을 표시할 div 생성
+      let autoBox = document.createElement("div");
+      autoBox.className = "autocomplete-box";
+      autoBox.style.position = "absolute";
+      autoBox.style.top = "50px";
+      autoBox.style.left = "0";
+      autoBox.style.width = "100%";
+      autoBox.style.background = "#fff";
+      autoBox.style.border = "1px solid #ccc";
+      autoBox.style.zIndex = "10";
+      autoBox.style.display = "none";
+      searchContainer.appendChild(autoBox);
+
+      searchInput.addEventListener("input", async function () {
+        const value = this.value.trim();
+        if (value.length === 0) {
+          autoBox.style.display = "none";
+          autoBox.innerHTML = "";
+          return;
+        }
+        const res = await fetch(`/autocomplete?q=${encodeURIComponent(value)}`);
+        const list = await res.json();
+        if (list.length === 0) {
+          autoBox.style.display = "none";
+          autoBox.innerHTML = "";
+          return;
+        }
+        autoBox.innerHTML = "";
+        list.forEach((title) => {
+          const item = document.createElement("div");
+          item.textContent = title;
+          item.style.padding = "8px 16px";
+          item.style.cursor = "pointer";
+          item.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            window.location.href = `/content/${encodeURIComponent(title)}`;
+          });
+          autoBox.appendChild(item);
+        });
+        autoBox.style.display = "block";
+      });
+
+      // 접속자 수 표시
+      fetch("/visitor-count")
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById("visitor-num").textContent = data.count;
+        });
+
+      // 포커스 아웃 시 자동완성 닫기
+      searchInput.addEventListener("blur", function () {
+        setTimeout(() => {
+          autoBox.style.display = "none";
+          autoBox.innerHTML = "";
+        }, 200);
+      });
+    </script>
+  </body>
+</html>

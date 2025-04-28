@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTT 탐색기</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('head.ejs') %>
+      <div class="content-container">
+        <div class="poster-container">
+          <img
+            src="<%= result[0].poster_url %>"
+            alt="포스터"
+            width="166"
+            height="236"
+          />
+        </div>
+        <div class="content-info">
+          <!-- 연령 등급급 -->
+          <div class="info-icon">
+            <% let age = result[0].age_rating; let imgFile; if (age === "7")
+            imgFile = "7.jpg"; else if (age === "12") imgFile = "12.jpg"; else
+            if (age === "15") imgFile = "15.jpg"; else if (age === "19") imgFile
+            = "19.jpg"; else imgFile = "all.jpg"; %>
+            <img
+              class="icon"
+              src="/image/<%= imgFile %>"
+              alt="등급"
+              width="26"
+              height="26"
+            />
+            <!-- 컨텐츠 채널 -->
+            <% (Array.isArray(result[0].channels) ? result[0].channels :
+            []).forEach(function(channel) { %> <% if
+            (channel.trim().toLowerCase() !== "netflix standard with ads") { %>
+            <img
+              class="icon"
+              src="/image/<%= channel.trim() %>.jpg"
+              alt="<%= channel %>"
+              width="26"
+              height="26"
+            />
+            <% } %> <% }); %>
+          </div>
+          <h1 class="title-kr"><%= result[0].korean_title %></h1>
+          <h2 class="title-en"><%= result[0].english_title %></h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="label">상영일</span>
+              <span class="value"><%= result[0].release_year %></span>
+            </div>
+            <div class="info-item">
+              <span class="label">감독</span>
+              <span class="value"><%= result[0].director %></span>
+            </div>
+            <div class="info-item">
+              <span class="label">주연배우</span>
+              <span class="value">
+                <% result[0].actors.forEach(function(actor, idx) { %> <%= actor
+                %><% if (idx < result[0].actors.length - 1) { %>, <% } %> <% });
+                %>
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">장르</span>
+              <span class="value">
+                <% if (Array.isArray(result[0].genres)) { %> <%
+                result[0].genres.forEach(function(genre, idx) { %> <%= genre
+                %><% if (idx < result[0].genres.length - 1) { %>, <% } %> <% });
+                %> <% } else { %> 없음 <% } %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
