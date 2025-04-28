@@ -28,7 +28,7 @@ new MongoClient(url)
 
 // req, res => 요청, 응답
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/public/index.html");
   console.log("Home");
 });
 
